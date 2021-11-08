@@ -1,0 +1,112 @@
+---
+title: "R for Data Science: Import, Tidy, Transform, Visualize and Model Data"
+output: html_notebook
+---
+
+
+![Capa do Livro](imagens/capa_livro.png)
+
+Livro em versão WEB: [R for Data Science](https://r4ds.had.co.nz/)
+
+Pacotes importantes
+
+```{r message=FALSE, warning=FALSE}
+# Base de dados usado
+#install.packages("data.table")
+
+# ggplot2, tibble, tidyr, readr, purrr and dplyr.
+#install.packages("tidyverse")
+library(tidyverse)
+
+# Complementam o tidyverse
+#install.packages(c("nycflights13", "gapminder", "Lahman"))
+
+# Ver as mensagens de erro em inglês
+Sys.setenv(LANGUAGE = "en")
+```
+3.2 First Steps
+
+3.2.1 The mpg data frame
+
+```{r}
+# Banco de dados
+mpg <- ggplot2::mpg
+```
+
+3.2.2 Creating a ggplot
+
+Plotando o mpg, displ no eixo x e hwy no eixo y.
+
+O Gráfico mostra relação negativa entre tamanho do motor (displ) e eficiência do combustivel (hwy)
+
+ggplot() é formado em camadas, ggplot(data = mpg) cria um gráfico vazio, geom_point adiciona uma camada com gráfico de pontos. Os argumentos aes(x,y) definem as variaveis dos gráficos.
+
+```{r}
+ ggplot(data = mpg) +
+  geom_point(mapping =  aes(x = displ, y = hwy))
+```
+
+3.2.3 Modelo de ggplot
+
+```{r eval=FALSE, include=FALSE}
+ggplot(data = <DATA>) + 
+  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+```
+
+3.3 Aesthetic mappings
+
+É possivel adicionar mais uma variável a um gráfico. Usando como exemplo o banco de dados eu posso definir um tipo de ponto ou cor diferente para cada tipo de carro.
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))
+```
+As cores revelam que muitos dos pontos incomuns são carros de dois lugares. Esses carros não parecem híbridos e são, na verdade, carros esportivos! Os carros esportivos têm motores grandes, como SUVs e picapes, mas carrocerias pequenas, como carros médios e compactos, o que aumenta o consumo de combustível. Em retrospectiva, é improvável que esses carros sejam híbridos, pois têm motores grandes.
+
+Para colorir apenas uma varíavel é possivel associando o nome da aesthetic ao nome da variável interna aes().
+
+Plotando com o aumento do tamanho na escala
+
+```{r}
+ggplot(data = mpg) + geom_point(mapping = aes(x = displ, y = hwy, size = class))
+```
+
+Plotando usando a transparência 
+
+```{r}
+# Left
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, alpha = class))
+```
+
+e o desenho dos pontos
+
+```{r}
+# Right
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, shape = class))
+```
+
+ A sintaxe destaca um insight útil sobre xe y: as localizações xey de um ponto são estéticas, propriedades visuais que você pode mapear para variáveis para exibir informações sobre os dados.
+ 
+O ggplot de uma forma geral legenda, dimensiona e colore os gráficos automáticamente, Porém é possivel definir as propriedades automáticamente.
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy), color = "red")
+```
+
+![Formas dos pontos](imagens/formas_pontos.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
